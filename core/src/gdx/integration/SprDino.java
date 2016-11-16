@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class SprDino extends Sprite {
 
-    private float fScreenWid = Gdx.graphics.getWidth(), faspRat;            
+    private float fScreenWid, faspRat;            
     Texture txDino, txDeadDino;
     Vector2 vPos, vDir, vGrav;
     private Sprite sprDino;
@@ -18,7 +18,7 @@ public class SprDino extends Sprite {
         txDino = _txDino;
         txDeadDino = _txDeadDino;
         sprDino = new Sprite(txDino);
-        vPos = new Vector2((40), 0);
+        vPos = new Vector2((0), 0);
         vDir = new Vector2(0, 0);
         vGrav = new Vector2(0, 0);
     }
@@ -38,15 +38,12 @@ public class SprDino extends Sprite {
         sprDino.setPosition(vPos.x, vPos.y);
     }
 
-    void HitDetection(float _aspectRa) {
-        faspRat = _aspectRa;
-
-        if ((sprDino.getX() + (sprDino.getWidth()*2)) >= fScreenWid) {
-            vPos.x = fScreenWid - sprDino.getWidth()- 50;          
-
+    void HitDetection(float _ScreenWid) {
+        fScreenWid = _ScreenWid;
+        if ((sprDino.getX()+sprDino.getWidth() >= fScreenWid)) {       
+            vPos.x = fScreenWid - (sprDino.getWidth());  
         } else if (sprDino.getX() <= 0) {
-            vPos.x = 0 + sprDino.getWidth();
-
+            vPos.x = 0;
         }
 
     }

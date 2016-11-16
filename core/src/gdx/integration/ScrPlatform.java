@@ -49,14 +49,14 @@ public class ScrPlatform implements Screen, InputProcessor {
         txPlat = new Texture("Platform.png");
         sprBack = new Sprite(new Texture(Gdx.files.internal("world.jpg")));
         sprBack.setSize(fScreenWidth, fScreenHei);        
-        camBack = new OrthographicCamera(fScreenWidth * aspectratio, fScreenHei);
+        camBack = new OrthographicCamera(fScreenWidth /** aspectratio*/, fScreenHei);
         camBack.position.set(fScreenWidth / 2, fScreenHei / 2, 0);
         Gdx.input.setInputProcessor((this));
         Gdx.graphics.setWindowedMode(800, 500);
         sprDino = new SprDino(txDino, txDeadDino);
         sprPlatform = new SprPlatform(txPlat);
         arsprPlatform = new Array<SprPlatform>();
-        arsprPlatform.add(sprPlatform);
+        arsprPlatform.add(sprPlatform);        
     }
 
     public void SetFont() {
@@ -66,7 +66,7 @@ public class ScrPlatform implements Screen, InputProcessor {
         parameter.size = 25;
         parameter.color = Color.BLACK;
         textFont = generator.generateFont(parameter);
-        parameter.size = 18;
+        parameter.size = 45;
         textFontLevel = generator.generateFont(parameter);
 
         generator.dispose();
@@ -82,7 +82,7 @@ public class ScrPlatform implements Screen, InputProcessor {
         Gdx.gl.glClearColor(1, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camBack.update();
-        sprDino.HitDetection(aspectratio);
+        sprDino.HitDetection(camBack.viewportWidth);
         for (SprPlatform sprPlatform : arsprPlatform) {
             sprPlatform.update();
         }
@@ -100,7 +100,7 @@ public class ScrPlatform implements Screen, InputProcessor {
         batch.draw(sprBack, nScreenX, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(sprBack, nScreenX - Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(sprBack, nScreenX + Gdx.graphics.getWidth(), 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        textFontLevel.draw(batch, sLevel, fScreenWidth / 3, (fScreenHei / 10) * 9);
+        textFontLevel.draw(batch, sLevel, fScreenWidth / 6, (fScreenHei / 10) * 9);
         batch.draw(sprDino.getSprite(), sprDino.getX(), sprDino.getY());
         for (SprPlatform sprPlatform : arsprPlatform) {
             batch.draw(sprPlatform.getSprite(), sprPlatform.getX(), sprPlatform.getY());
@@ -188,11 +188,11 @@ public class ScrPlatform implements Screen, InputProcessor {
             sprDino.vGrav.set(0, (float) -0.5);
             sprDino.bJump = true;
         } else if (keycode == Input.Keys.A) {
-            sprDino.vDir.set(-10, (float) sprDino.vDir.y);
-            fVx = -10;
+            sprDino.vDir.set(-2, (float) sprDino.vDir.y);
+            fVx = -2;
         } else if (keycode == Input.Keys.D) {
-            sprDino.vDir.set(10, (float) sprDino.vDir.y);
-            fVx = 10;
+            sprDino.vDir.set(2, (float) sprDino.vDir.y);
+            fVx = 2;
         } else if (keycode == Input.Keys.E) {
             System.exit(3);
         }
